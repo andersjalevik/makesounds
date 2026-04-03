@@ -6,22 +6,95 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+// Collect tags with counts
+const tagCounts = new Map<string, number>();
+const authorCounts = new Map<string, number>();
+posts.forEach((post) => {
+  post.data.tags.forEach((tag) => tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1));
+  authorCounts.set(post.data.author, (authorCounts.get(post.data.author) || 0) + 1);
+});
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+const sortedAuthors = [...authorCounts.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
 <BaseLayout>
-  <section class="posts-grid">
-    {posts.length === 0 && <p class="empty">No posts yet. Head to the <a href="/admin">CMS</a> to create one.</p>}
-    {posts.map((post) => (
-      <PostCard
-        slug={post.id}
-        title={post.data.title}
-        date={post.data.date}
-        author={post.data.author}
-        tags={post.data.tags}
-        cover_image={post.data.cover_image}
-        audio_file={post.data.audio_file}
-        description={post.data.description}
-      />
-    ))}
-  </section>
+  <div class="page-layout">
+    <section class="posts-grid">
+      {posts.length === 0 && <p class="empty">No posts yet. Head to the <a href="/admin">CMS</a> to create one.</p>}
+      {posts.map((post) => (
+        <PostCard
+          slug={post.id}
+          title={post.data.title}
+          date={post.data.date}
+          author={post.data.author}
+          tags={post.data.tags}
+          cover_image={post.data.cover_image}
+          audio_file={post.data.audio_file}
+          body={post.body ?? ''}
+        />
+      ))}
+    </section>
+
+    <aside class="sidebar">
+      <section>
+        <h3>Tags</h3>
+        <div class="filter-list" data-filter-group="tag">
+          <button class="filter-btn active" data-filter-value="">All</button>
+          {sortedTags.map(([tag, count]) => (
+            <button class="filter-btn" data-filter-value={tag}>
+              #{tag} <span class="filter-count">({count})</span>
+            </button>
+          ))}
+        </div>
+      </section>
+      <section>
+        <h3>Authors</h3>
+        <div class="filter-list" data-filter-group="author">
+          <button class="filter-btn active" data-filter-value="">All</button>
+          {sortedAuthors.map(([author, count]) => (
+            <button class="filter-btn" data-filter-value={author}>
+              {author} <span class="filter-count">({count})</span>
+            </button>
+          ))}
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script is:inline>
+    (function() {
+      var activeTag = '';
+      var activeAuthor = '';
+
+      function applyFilters() {
+        document.querySelectorAll('.post-card').forEach(function(card) {
+          var tags = Array.from(card.querySelectorAll('.tag')).map(function(el) {
+            return el.textContent.replace('#', '');
+          });
+          var author = card.querySelector('.author')?.textContent || '';
+
+          var matchTag = !activeTag || tags.includes(activeTag);
+          var matchAuthor = !activeAuthor || author === activeAuthor;
+
+          card.style.display = (matchTag && matchAuthor) ? '' : 'none';
+        });
+      }
+
+      document.querySelectorAll('[data-filter-group]').forEach(function(group) {
+        var type = group.dataset.filterGroup;
+        group.querySelectorAll('.filter-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            group.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+
+            if (type === 'tag') activeTag = btn.dataset.filterValue;
+            if (type === 'author') activeAuthor = btn.dataset.filterValue;
+
+            applyFilters();
+          });
+        });
+      });
+    })();
+  </script>
 </BaseLayout>

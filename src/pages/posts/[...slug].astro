@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagList from '../../components/TagList.astro';
+import WavePlayer from '../../components/WavePlayer.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -34,14 +35,7 @@ const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month:
 
     <TagList tags={tags} />
 
-    {audio_file && (
-      <div class="audio-player">
-        <audio controls preload="metadata">
-          <source src={audio_file} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    )}
+    {audio_file && <WavePlayer src={audio_file} />}
 
     <div class="post-body">
       <Content />

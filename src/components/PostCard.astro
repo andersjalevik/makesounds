@@ -9,11 +9,19 @@ interface Props {
   tags: string[];
   cover_image?: string;
   audio_file?: string;
-  description?: string;
+  body: string;
 }
 
-const { slug, title, date, author, tags, cover_image, audio_file, description } = Astro.props;
+const { slug, title, date, author, tags, cover_image, audio_file, body } = Astro.props;
 const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+// Strip markdown syntax and truncate
+const plainText = body
+  .replace(/^---[\s\S]*?---\s*/m, '') // remove frontmatter
+  .replace(/[#*_`~>\[\]!()-]/g, '')    // strip markdown chars
+  .replace(/\n+/g, ' ')               // collapse newlines
+  .trim();
+const excerpt = plainText.length > 140 ? plainText.slice(0, 140).trimEnd() + '…' : plainText;
 ---
 
 <article class="post-card">
@@ -30,7 +38,7 @@ const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month:
         <time datetime={date.toISOString()}>{formattedDate}</time>
         {audio_file && <span class="audio-badge">♫ audio</span>}
       </div>
-      {description && <p class="post-card-description">{description}</p>}
+      {excerpt && <p class="post-card-description">{excerpt}</p>}
     </div>
   </a>
   <TagList tags={tags} />

@@ -1,3 +1,10 @@
+/* Netlify Identity widget - prevent clipping */
+#netlify-identity-widget {
+  position: fixed !important;
+  bottom: 0;
+  z-index: 9999;
+}
+
 /* Reset & base */
 *,
 *::before,
@@ -216,6 +223,7 @@ main {
   width: 100%;
   flex: 1;
 }
+
 
 /* Footer */
 footer {
@@ -450,6 +458,66 @@ main > p {
   margin-bottom: 1rem;
 }
 
+/* Two-column layout */
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.sidebar section {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filter-btn {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  font-family: inherit;
+}
+
+.filter-btn:hover {
+  color: var(--color-accent);
+}
+
+.filter-btn.active {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.filter-count {
+  color: var(--color-text-muted);
+  font-size: 0.8em;
+}
+
 /* Theme switcher */
 .theme-switcher {
   display: flex;
@@ -476,6 +544,28 @@ main > p {
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    order: -1;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .sidebar section {
+    margin-bottom: 0;
+  }
+
+  .filter-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 @media (max-width: 600px) {
   nav {
     padding: 0.75rem 1rem;

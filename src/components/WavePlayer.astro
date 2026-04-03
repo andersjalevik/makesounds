@@ -1,0 +1,156 @@
+---
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+const id = `wave-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class="wave-player" data-wave-id={id} data-wave-src={src}>
+  <div class="wave-container" id={id}></div>
+  <div class="wave-controls">
+    <button class="wave-play-btn" data-wave-target={id} aria-label="Play/Pause">
+      <svg class="icon-play" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <polygon points="6,4 20,12 6,20" />
+      </svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="display:none">
+        <rect x="5" y="4" width="4" height="16" />
+        <rect x="15" y="4" width="4" height="16" />
+      </svg>
+    </button>
+    <span class="wave-time" data-wave-time={id}>0:00 / 0:00</span>
+  </div>
+</div>
+
+<style>
+  .wave-player {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .wave-container {
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .wave-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .wave-play-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .wave-play-btn:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .wave-time {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<script>
+  import WaveSurfer from 'wavesurfer.js';
+
+  function formatTime(seconds: number): string {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function getThemeColors() {
+    const style = getComputedStyle(document.documentElement);
+    return {
+      waveColor: style.getPropertyValue('--color-border').trim() || '#333',
+      progressColor: style.getPropertyValue('--color-accent').trim() || '#f0a040',
+    };
+  }
+
+  function initPlayers() {
+    document.querySelectorAll<HTMLElement>('.wave-player').forEach((player) => {
+      if (player.dataset.waveInit) return;
+      player.dataset.waveInit = 'true';
+
+      const id = player.dataset.waveId!;
+      const src = player.dataset.waveSrc!;
+      const container = player.querySelector<HTMLElement>(`#${id}`)!;
+      const btn = player.querySelector<HTMLButtonElement>(`[data-wave-target="${id}"]`)!;
+      const iconPlay = btn.querySelector<SVGElement>('.icon-play')!;
+      const iconPause = btn.querySelector<SVGElement>('.icon-pause')!;
+      const timeEl = player.querySelector<HTMLElement>(`[data-wave-time="${id}"]`)!;
+
+      const colors = getThemeColors();
+
+      const ws = WaveSurfer.create({
+        container,
+        url: src,
+        height: 64,
+        barWidth: 2,
+        barGap: 1,
+        barRadius: 2,
+        cursorWidth: 0,
+        waveColor: colors.waveColor,
+        progressColor: colors.progressColor,
+      });
+
+      ws.on('ready', () => {
+        timeEl.textContent = `0:00 / ${formatTime(ws.getDuration())}`;
+      });
+
+      ws.on('audioprocess', () => {
+        timeEl.textContent = `${formatTime(ws.getCurrentTime())} / ${formatTime(ws.getDuration())}`;
+      });
+
+      ws.on('seeking', () => {
+        timeEl.textContent = `${formatTime(ws.getCurrentTime())} / ${formatTime(ws.getDuration())}`;
+      });
+
+      ws.on('play', () => {
+        iconPlay.style.display = 'none';
+        iconPause.style.display = '';
+      });
+
+      ws.on('pause', () => {
+        iconPlay.style.display = '';
+        iconPause.style.display = 'none';
+      });
+
+      ws.on('finish', () => {
+        iconPlay.style.display = '';
+        iconPause.style.display = 'none';
+      });
+
+      btn.addEventListener('click', () => {
+        ws.playPause();
+      });
+
+      // Update colors on theme change
+      const observer = new MutationObserver(() => {
+        const c = getThemeColors();
+        ws.setOptions({ waveColor: c.waveColor, progressColor: c.progressColor });
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    });
+  }
+
+  // Init on page load and Astro view transitions
+  initPlayers();
+  document.addEventListener('astro:page-load', initPlayers);
+</script>

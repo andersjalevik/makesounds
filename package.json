@@ -7,10 +7,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "local-cms": "sed -i '' 's/local_backend: false/local_backend: true/' public/admin/config.yml && npx decap-server & astro dev",
+    "cms-proxy": "decap-server",
+    "local-cms": "sed -i '' 's/local_backend: false/local_backend: true/' public/admin/config.yml && decap-server & astro dev",
     "remote-cms": "sed -i '' 's/local_backend: true/local_backend: false/' public/admin/config.yml && echo 'Switched to remote CMS (git-gateway)'"
   },
   "dependencies": {
-    "astro": "^5.7.10"
+    "astro": "^5.7.10",
+    "wavesurfer.js": "^7.12.5"
+  },
+  "devDependencies": {
+    "decap-server": "^3.6.0"
   }
 }
