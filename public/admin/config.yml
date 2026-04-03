@@ -1,0 +1,24 @@
+local_backend: false
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Cover Image", name: "cover_image", widget: "image", required: false }
+      - { label: "Audio File", name: "audio_file", widget: "file", required: false, media_library: { allow_multiple: false } }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Body", name: "body", widget: "markdown" }

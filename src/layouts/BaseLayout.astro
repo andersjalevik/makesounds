@@ -1,0 +1,84 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'make sounds' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('theme') || 'crimson';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/" class="site-name">make sounds</a>
+        <div class="nav-links">
+          <a href="/tags">tags</a>
+          <a href="/admin" target="_blank" rel="noopener">cms</a>
+          <div class="theme-switcher">
+            <button class="theme-btn" data-set-theme="crimson" style="background:#F7374F" title="Crimson Night"></button>
+            <button class="theme-btn" data-set-theme="ocean" style="background:#006A67" title="Deep Ocean"></button>
+            <button class="theme-btn" data-set-theme="purple" style="background:#8C3061" title="Purple Blaze"></button>
+            <button class="theme-btn" data-set-theme="ember" style="background:#F97300" title="Ember"></button>
+            <button class="theme-btn" data-set-theme="rose" style="background:#FF204E" title="Neon Rose"></button>
+            <button class="theme-btn" data-set-theme="bonfire" style="background:#E3651D" title="Bonfire"></button>
+            <button class="theme-btn" data-set-theme="dusk" style="background:#A76F6F" title="Dusk"></button>
+            <button class="theme-btn" data-set-theme="latte" style="background:#C08552" title="Latte"></button>
+            <button class="theme-btn" data-set-theme="jungle" style="background:#85C79A" title="Jungle"></button>
+            <button class="theme-btn" data-set-theme="lavender" style="background:#9B8EC7" title="Lavender"></button>
+            <button class="theme-btn" data-set-theme="harvest" style="background:#C44A3A" title="Harvest"></button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>make sounds &mdash; a music challenge blog</p>
+    </footer>
+
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+
+      // Theme switcher
+      (function() {
+        var current = localStorage.getItem('theme') || 'crimson';
+        var buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach(function(btn) {
+          if (btn.dataset.setTheme === current) btn.classList.add('active');
+          btn.addEventListener('click', function() {
+            var theme = this.dataset.setTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            buttons.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

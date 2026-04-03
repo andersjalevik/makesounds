@@ -1,0 +1,37 @@
+---
+import TagList from './TagList.astro';
+
+interface Props {
+  slug: string;
+  title: string;
+  date: Date;
+  author: string;
+  tags: string[];
+  cover_image?: string;
+  audio_file?: string;
+  description?: string;
+}
+
+const { slug, title, date, author, tags, cover_image, audio_file, description } = Astro.props;
+const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<article class="post-card">
+  <a href={`/posts/${slug}`} class="post-card-link">
+    {cover_image && (
+      <div class="post-card-image">
+        <img src={cover_image} alt={title} loading="lazy" />
+      </div>
+    )}
+    <div class="post-card-content">
+      <h2>{title}</h2>
+      <div class="post-card-meta">
+        <span class="author">{author}</span>
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {audio_file && <span class="audio-badge">♫ audio</span>}
+      </div>
+      {description && <p class="post-card-description">{description}</p>}
+    </div>
+  </a>
+  <TagList tags={tags} />
+</article>

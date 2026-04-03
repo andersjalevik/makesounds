@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../../components/TagList.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, date, author, tags, cover_image, audio_file } = post.data;
+const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={`${title} — make sounds`}>
+  <article class="post">
+    {cover_image && (
+      <div class="post-cover">
+        <img src={cover_image} alt={title} />
+      </div>
+    )}
+
+    <h1>{title}</h1>
+
+    <div class="post-meta">
+      <span class="author">{author}</span>
+      <time datetime={date.toISOString()}>{formattedDate}</time>
+    </div>
+
+    <TagList tags={tags} />
+
+    {audio_file && (
+      <div class="audio-player">
+        <audio controls preload="metadata">
+          <source src={audio_file} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    )}
+
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
