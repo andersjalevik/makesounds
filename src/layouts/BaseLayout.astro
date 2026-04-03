@@ -54,6 +54,10 @@ const { title = 'make sounds' } = Astro.props;
     </footer>
 
     <script is:inline>
+      // Redirect invite/recovery tokens to admin page where the widget can handle them
+      if (window.location.hash.match(/#invite_token=|#recovery_token=|#confirmation_token=/)) {
+        window.location.href = '/admin/index.html' + window.location.hash;
+      }
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', (user) => {
           if (!user) {
@@ -62,10 +66,6 @@ const { title = 'make sounds' } = Astro.props;
             });
           }
         });
-        // Handle invite/recovery tokens
-        if (window.location.hash.match(/#invite_token=|#recovery_token=|#confirmation_token=/)) {
-          window.netlifyIdentity.open();
-        }
       }
 
       // Theme switcher
