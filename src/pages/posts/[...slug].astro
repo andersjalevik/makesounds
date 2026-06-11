@@ -40,10 +40,30 @@ const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month:
       </div>
 
       {audio_file && <WavePlayer src={audio_file} />}
-    </header>
 
-    <div class="post-body">
-      <Content />
-    </div>
+      <div class="post-body">
+        <Content />
+      </div>
+    </header>
   </article>
+
+  <script is:inline>
+    (function () {
+      var cycle = ['none', '2', '1'];
+      function initOverlayToggle() {
+        document.querySelectorAll('.post-header-image').forEach(function (el) {
+          if (el.dataset.overlayInit) return;
+          el.dataset.overlayInit = 'true';
+          el.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-cover-overlay') || 'none';
+            var next = cycle[(cycle.indexOf(current) + 1) % cycle.length];
+            document.documentElement.setAttribute('data-cover-overlay', next);
+            localStorage.setItem('cover-overlay', next);
+          });
+        });
+      }
+      initOverlayToggle();
+      document.addEventListener('astro:page-load', initOverlayToggle);
+    })();
+  </script>
 </BaseLayout>

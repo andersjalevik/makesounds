@@ -16,8 +16,10 @@ const { title = 'make sounds' } = Astro.props;
     <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script is:inline>
       (function() {
-        var t = localStorage.getItem('theme') || 'crimson';
+        var t = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
+        var o = localStorage.getItem('cover-overlay') || 'none';
+        document.documentElement.setAttribute('data-cover-overlay', o);
       })();
     </script>
   </head>
@@ -29,17 +31,13 @@ const { title = 'make sounds' } = Astro.props;
           <a href="/tags">tags</a>
           <a href="/admin" target="_blank" rel="noopener">cms</a>
           <div class="theme-switcher">
-            <button class="theme-btn" data-set-theme="crimson" style="background:#F7374F" title="Crimson Night"></button>
-            <button class="theme-btn" data-set-theme="ocean" style="background:#006A67" title="Deep Ocean"></button>
-            <button class="theme-btn" data-set-theme="purple" style="background:#8C3061" title="Purple Blaze"></button>
-            <button class="theme-btn" data-set-theme="ember" style="background:#F97300" title="Ember"></button>
-            <button class="theme-btn" data-set-theme="rose" style="background:#FF204E" title="Neon Rose"></button>
-            <button class="theme-btn" data-set-theme="bonfire" style="background:#E3651D" title="Bonfire"></button>
-            <button class="theme-btn" data-set-theme="dusk" style="background:#A76F6F" title="Dusk"></button>
-            <button class="theme-btn" data-set-theme="latte" style="background:#C08552" title="Latte"></button>
-            <button class="theme-btn" data-set-theme="jungle" style="background:#85C79A" title="Jungle"></button>
-            <button class="theme-btn" data-set-theme="lavender" style="background:#9B8EC7" title="Lavender"></button>
-            <button class="theme-btn" data-set-theme="harvest" style="background:#C44A3A" title="Harvest"></button>
+            <button class="theme-btn" data-set-theme="dark" style="--btn-surface:#333;--btn-accent:#91e5ff" title="Dark"></button>
+            <button class="theme-btn" data-set-theme="purple" style="--btn-surface:#340a2e;--btn-accent:#ffb778" title="Purple Blaze"></button>
+            <button class="theme-btn" data-set-theme="rose" style="--btn-surface:#0a2e58;--btn-accent:#FF204E" title="Neon Rose"></button>
+            <button class="theme-btn" data-set-theme="bonfire" style="--btn-surface:#222;--btn-accent:#E3651D" title="Bonfire"></button>
+            <button class="theme-btn" data-set-theme="dusk" style="--btn-surface:#354e60;--btn-accent:#A76F6F" title="Dusk"></button>
+            <button class="theme-btn" data-set-theme="banana" style="--btn-surface:#574731;--btn-accent:#ffa149" title="Banana"></button>
+            <button class="theme-btn" data-set-theme="light" style="--btn-surface:#fff;--btn-accent:#db4848" title="Light"></button>
           </div>
         </div>
       </nav>
@@ -66,7 +64,7 @@ const { title = 'make sounds' } = Astro.props;
 
       // Theme switcher
       (function() {
-        var current = localStorage.getItem('theme') || 'crimson';
+        var current = localStorage.getItem('theme') || 'dark';
         var buttons = document.querySelectorAll('.theme-btn');
         buttons.forEach(function(btn) {
           if (btn.dataset.setTheme === current) btn.classList.add('active');

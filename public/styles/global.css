@@ -28,57 +28,32 @@
   --color-accent-hover: color-mix(in srgb, var(--color-accent),  var(--color-text) var(--mix-accent-hover));
 }
 
-/* 
-[data-theme="crimson"] {
-  --color-bg: #2C2C2C;
-  --color-surface: #352030;
-  --color-text: #f0e0e8;
-  --color-accent: #ff5a6e;
-}
-Theme: Crimson Night */
-
-/* Theme: Mint */
-[data-theme="crimson"] {
+/* Theme: Dark */
+[data-theme="dark"] {
   --color-bg: #000;
   --color-surface: #333;
   --color-text: #ffffff;
   --color-accent: #91e5ff;
 }
 
-
-/* Theme: Deep Ocean
-[data-theme="ocean"] {
-  --color-bg: #000B58;
-  --color-surface: #003161;
-  --color-text: #FFF4B7;
-  --color-accent: #006A67;
-}
-
-*/
-
-/* Theme: Deep Ocean */
-[data-theme="ocean"] {
+/* Theme: Light */
+[data-theme="light"] {
   --color-bg: #eee;
   --color-surface: #fff;
   --color-text: #000;
   --color-accent: #db4848;
 }
 
+
+
 /* Theme: Purple Blaze */
 [data-theme="purple"] {
-  --color-bg: #522258;
-  --color-surface: #5e2a62;
-  --color-text: #f5e0e8;
-  --color-accent: #D95F59;
+  --color-bg: #240021;
+  --color-surface: #340a2e;
+  --color-text: #E2DFD0;
+  --color-accent: #ffb778;
 }
 
-/* Theme: Ember */
-[data-theme="ember"] {
-  --color-bg: #32012F;
-  --color-surface: #3d1038;
-  --color-text: #E2DFD0;
-  --color-accent: #F97300;
-}
 
 /* Theme: Neon Rose */
 [data-theme="rose"] {
@@ -100,48 +75,24 @@ Theme: Crimson Night */
 [data-theme="dusk"] {
   --color-bg: #2D4356;
   --color-surface: #354e60;
-  --color-text: #EAB2A0;
+  --color-text: #ff8f6a;
   --color-accent: #A76F6F;
 }
 
-/* Theme: Latte */
-[data-theme="latte"] {
-  --color-bg: #4B2E2B;
-  --color-surface: #5a3835;
-  --color-text: #FFF8F0;
-  --color-accent: #C08552;
-}
-
-/* Theme: Jungle */
-[data-theme="jungle"] {
-  --color-bg: #281C59;
-  --color-surface: #322668;
-  --color-text: #EDF7BD;
-  --color-accent: #85C79A;
-}
-
-/* Theme: Lavender */
-[data-theme="lavender"] {
-  --color-bg: #9B8EC7;
-  --color-surface: #BDA6CE;
-  --color-text: #F2EAE0;
-  --color-accent: #B4D3D9;
-}
-
-/* Theme: Harvest */
-[data-theme="harvest"] {
+/* Theme: Banana */
+[data-theme="banana"] {
   --color-bg: #2a2218;
-  --color-surface: #382e20;
-  --color-text: #F2D479;
-  --color-accent: #C44A3A;
+  --color-surface: #574731;
+  --color-text: #ffedb6;
+  --color-accent: #ffa149;
 }
 
-/* Default (no data-theme set yet) */
+/* Default (no data-theme set yet) — mirrors the "dark" theme */
 :root:not([data-theme]) {
-  --color-bg: #2C2C2C;
-  --color-surface: #352030;
-  --color-text: #f0e0e8;
-  --color-accent: #F7374F;
+  --color-bg: #000;
+  --color-surface: #333;
+  --color-text: #ffffff;
+  --color-accent: #91e5ff;
 }
 
 body {
@@ -212,9 +163,19 @@ nav {
 main {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 0.5rem  1.5rem 0 1.5rem;
   width: 100%;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main:has(.post) {
+  padding-bottom: 0;
+}
+
+body:has(.post) > footer {
+  display: none;
 }
 
 
@@ -340,16 +301,19 @@ footer {
 /* Single post */
 .post {
   max-width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-header {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-bottom: 2rem;
   padding: 1.25rem;
+  flex: 1;
   /* border: 1px solid var(--color-border); */
-   border-radius: var(--radius);
+   border-radius: var(--radius) var(--radius) 0 0;
 
   background: linear-gradient(
     180deg,
@@ -366,14 +330,40 @@ footer {
 }
 
 .post-header-image {
-  border-radius: var(--radius);
+  position: relative;
   overflow: hidden;
+  cursor: pointer;
+}
+
+[data-cover-overlay="none"] .post-header-image {
+  border-radius: var(--radius);
 }
 
 .post-header-image img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+
+.post-header-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+[data-cover-overlay="1"] .post-header-image::after {
+  background-image: url('/images/overlay.png');
+}
+
+[data-cover-overlay="2"] .post-header-image::after {
+  background-image: url('/images/overlay2.png');
+}
+
+[data-cover-overlay="none"] .post-header-image::after {
+  display: none;
 }
 
 .post-header-info {
@@ -560,13 +550,27 @@ main > p {
 }
 
 .theme-btn {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s, transform 0.2s;
   padding: 0;
+  position: relative;
+  background: var(--btn-surface);
+}
+
+.theme-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: var(--btn-accent);
+  transform: translate(-50%, -50%);
 }
 
 .theme-btn:hover {
