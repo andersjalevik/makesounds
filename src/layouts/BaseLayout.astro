@@ -49,10 +49,6 @@ const { title = 'make sounds' } = Astro.props;
       <slot />
     </main>
 
-    <footer>
-      <p>make sounds &mdash; a music challenge blog</p>
-    </footer>
-
     <script is:inline>
       // Redirect invite/recovery tokens to admin page where the widget can handle them
       if (window.location.hash.match(/#invite_token=|#recovery_token=|#confirmation_token=/)) {

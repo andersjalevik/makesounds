@@ -17,138 +17,131 @@
 :root {
   --max-width: 800px;
   --radius: 8px;
+
+  /* Derivation strengths — tune to adjust border/muted/hover across every theme */
+  --mix-border: 20%;
+  --mix-muted: 20%;
+  --mix-accent-hover: 30%;
+
+  --color-border:       color-mix(in srgb, var(--color-surface), var(--color-text) var(--mix-border));
+  --color-text-muted:   color-mix(in srgb, var(--color-text),    var(--color-bg)   var(--mix-muted));
+  --color-accent-hover: color-mix(in srgb, var(--color-accent),  var(--color-text) var(--mix-accent-hover));
 }
 
-/* Theme: Crimson Night */
+/* 
 [data-theme="crimson"] {
   --color-bg: #2C2C2C;
   --color-surface: #352030;
-  --color-border: #522546;
   --color-text: #f0e0e8;
-  --color-text-muted: #a08898;
   --color-accent: #ff5a6e;
-  --color-accent-hover: #ff8a9a;
+}
+Theme: Crimson Night */
+
+/* Theme: Mint */
+[data-theme="crimson"] {
+  --color-bg: #000;
+  --color-surface: #333;
+  --color-text: #ffffff;
+  --color-accent: #91e5ff;
 }
 
-/* Theme: Deep Ocean */
+
+/* Theme: Deep Ocean
 [data-theme="ocean"] {
   --color-bg: #000B58;
   --color-surface: #003161;
-  --color-border: #004a60;
   --color-text: #FFF4B7;
-  --color-text-muted: #c0b880;
   --color-accent: #006A67;
-  --color-accent-hover: #00918d;
+}
+
+*/
+
+/* Theme: Deep Ocean */
+[data-theme="ocean"] {
+  --color-bg: #eee;
+  --color-surface: #fff;
+  --color-text: #000;
+  --color-accent: #db4848;
 }
 
 /* Theme: Purple Blaze */
 [data-theme="purple"] {
   --color-bg: #522258;
   --color-surface: #5e2a62;
-  --color-border: #8C3061;
   --color-text: #f5e0e8;
-  --color-text-muted: #d0a0b0;
   --color-accent: #D95F59;
-  --color-accent-hover: #C63C51;
 }
 
 /* Theme: Ember */
 [data-theme="ember"] {
   --color-bg: #32012F;
   --color-surface: #3d1038;
-  --color-border: #524C42;
   --color-text: #E2DFD0;
-  --color-text-muted: #a09880;
   --color-accent: #F97300;
-  --color-accent-hover: #ffaa44;
 }
 
 /* Theme: Neon Rose */
 [data-theme="rose"] {
   --color-bg: #00224D;
   --color-surface: #0a2e58;
-  --color-border: #5D0E41;
   --color-text: #f0d0e0;
-  --color-text-muted: #a07090;
   --color-accent: #FF204E;
-  --color-accent-hover: #A0153E;
 }
 
 /* Theme: Bonfire */
 [data-theme="bonfire"] {
   --color-bg: #191919;
   --color-surface: #222222;
-  --color-border: #383030;
   --color-text: #e8e0d0;
-  --color-text-muted: #908878;
   --color-accent: #E3651D;
-  --color-accent-hover: #BED754;
 }
 
 /* Theme: Dusk */
 [data-theme="dusk"] {
   --color-bg: #2D4356;
   --color-surface: #354e60;
-  --color-border: #435B66;
   --color-text: #EAB2A0;
-  --color-text-muted: #b09080;
   --color-accent: #A76F6F;
-  --color-accent-hover: #EAB2A0;
 }
 
 /* Theme: Latte */
 [data-theme="latte"] {
   --color-bg: #4B2E2B;
   --color-surface: #5a3835;
-  --color-border: #8C5A3C;
   --color-text: #FFF8F0;
-  --color-text-muted: #c0a890;
   --color-accent: #C08552;
-  --color-accent-hover: #d8a070;
 }
 
 /* Theme: Jungle */
 [data-theme="jungle"] {
   --color-bg: #281C59;
   --color-surface: #322668;
-  --color-border: #4E8D9C;
   --color-text: #EDF7BD;
-  --color-text-muted: #a8b888;
   --color-accent: #85C79A;
-  --color-accent-hover: #a8e0b8;
 }
 
 /* Theme: Lavender */
 [data-theme="lavender"] {
   --color-bg: #9B8EC7;
   --color-surface: #BDA6CE;
-  --color-border: #a898c0;
   --color-text: #F2EAE0;
-  --color-text-muted: #d0c8c0;
   --color-accent: #B4D3D9;
-  --color-accent-hover: #d0e8ee;
 }
 
 /* Theme: Harvest */
 [data-theme="harvest"] {
   --color-bg: #2a2218;
   --color-surface: #382e20;
-  --color-border: #584830;
   --color-text: #F2D479;
-  --color-text-muted: #c0a860;
   --color-accent: #C44A3A;
-  --color-accent-hover: #D97A2B;
 }
 
 /* Default (no data-theme set yet) */
 :root:not([data-theme]) {
   --color-bg: #2C2C2C;
   --color-surface: #352030;
-  --color-border: #522546;
   --color-text: #f0e0e8;
-  --color-text-muted: #a08898;
   --color-accent: #F7374F;
-  --color-accent-hover: #ff6478;
 }
 
 body {
@@ -178,7 +171,7 @@ img {
 
 /* Header */
 header {
-  border-bottom: 1px solid var(--color-border);
+  /* border-bottom: 1px solid var(--color-border); */
 }
 
 nav {
@@ -244,7 +237,7 @@ footer {
 /* Post card */
 .post-card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  /* border: 1px solid var(--color-border); */
   border-radius: var(--radius);
   overflow: hidden;
   transition: border-color 0.2s;
@@ -349,35 +342,66 @@ footer {
   max-width: 100%;
 }
 
-.post-cover {
-  margin-bottom: 1.5rem;
-  border-radius: var(--radius);
-  overflow: hidden;
-  max-width: 250px;
+.post-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  /* border: 1px solid var(--color-border); */
+   border-radius: var(--radius);
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-accent) 0%, var(--color-surface)) 0%,
+    var(--color-surface) 100%
+  );
 }
 
-.post-cover img {
+.post-header-top {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.post-header-image {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.post-header-image img {
   width: 100%;
-  max-height: 250px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+
+.post-header-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
 }
 
 .post h1 {
   font-size: 2rem;
-  margin-bottom: 0.5rem;
+  line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
-.post-meta {
+.post-header-info .post-meta {
+  margin-top: auto;
+  padding-top: 1rem;
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
   color: var(--color-text-muted);
   font-size: 0.9rem;
-  margin-bottom: 0.75rem;
 }
 
-.post .tag-list {
-  margin-bottom: 1.5rem;
+.post-header-info .post-meta .tag-list {
+  margin: 0;
 }
 
 /* Audio player */
@@ -587,6 +611,15 @@ main > p {
 
   .post h1 {
     font-size: 1.5rem;
+  }
+
+  .post-header-top {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .post-header-image {
+    max-width: 200px;
   }
 
   .post-card-link {

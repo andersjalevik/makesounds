@@ -25,15 +25,11 @@ const id = `wave-${Math.random().toString(36).slice(2, 9)}`;
 
 <style>
   .wave-player {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    width: 100%;
   }
 
   .wave-container {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     border-radius: 4px;
     overflow: hidden;
   }
@@ -78,7 +74,7 @@ const id = `wave-${Math.random().toString(36).slice(2, 9)}`;
   function getThemeColors() {
     const style = getComputedStyle(document.documentElement);
     return {
-      waveColor: style.getPropertyValue('--color-border').trim() || '#333',
+      waveColor: style.getPropertyValue('--color-text-muted').trim() || '#888',
       progressColor: style.getPropertyValue('--color-accent').trim() || '#f0a040',
     };
   }
