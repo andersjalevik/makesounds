@@ -15,7 +15,7 @@ Sen är är det en Pro800 på pluckljuden i början och en Minibrute2 samt TD3 p
  
 Vad skulle då låten heta? Tja, då låten har både rymdsyntar och melankoli går ju såklart tankarna till en övergiven satelit på drift långt där ute i den mörka rymden, hade det funnits en musikvideo hade kanske wirframen sett ut så här:
 
-del 1: En satelit blir utsläppt, ensam i den stora rymden. Förundran, spänning och nervositet!
+del 1: En satellit blir utsläppt, ensam i den stora rymden. Förundran, spänning och nervositet!
 
 del 2: Åh nej, kollision med asteroider (eller är det rymdmåsar?). Skräck och fasa!
 
