@@ -8,7 +8,7 @@ tags:
   - challenge4
 ---
 Istället för att börja skruva på apparaterna på en gång började jag den här gången vid pianot. Jag är verkligen helt nybörjare på instrumentet men det är skoj att testa lite ackordföljder. När jag väl fått fram en (antagligen ganska vanlig) ackordföljd spelade jag in den på min sequencer och lekte vidare med maskinerna. Nya maskiner för den här gången var min sequencer (oxi one) och samplern (1010 blackbox) så mycket av tiden gick åt att lära sig dessa maskiner. Just blackboxen var perfekt att använda till samplingarna vi skulle ha med den här gången, ni kan bland annat höra dem här:
-00:00 Olas måsljuden, körda genom granulizer och pitch-lfo
+00:00 Olas måsljud, körda genom granulizer och pitch-lfo
 01:16  Pontus klick som percussion samt Oskars bärs-ljud som hihat.
 01:46  Mitt "spela på glas"-ljud som atmosfäriskt ljud i bakgrunden (med reverb, delay och högpassfilter)
 Sen är är det en Pro800 på pluckljuden i början och en Minibrute2 samt TD3 på leadmelodierna. Orkade inte mecka i datan så detta är råinspelningen från mixern.
