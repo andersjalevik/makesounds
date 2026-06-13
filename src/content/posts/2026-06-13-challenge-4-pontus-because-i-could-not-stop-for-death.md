@@ -1,6 +1,6 @@
 ---
 title: "Challenge #4 Pontus: Because I Could Not Stop For Death"
-date: 2026-06-13T18:08:00.000+02:00
+date: 2026-06-13T17:08:00.000+02:00
 author: Pontus
 cover_image: /uploads/emily-dickinson.png
 audio_file: /uploads/because-i-could-not-stop-for-death.mp3
