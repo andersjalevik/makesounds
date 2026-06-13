@@ -21,6 +21,6 @@ del 2: Åh nej, kollision med asteroider (eller är det rymdmåsar?). Skräck oc
 
 del 3: Sateliten är nu på drift i okänd bana ut ur solsystemet. Melankoli och uppgivenhet.
 
-del 4: De sista systemens dödskamp innan batteriet dör och sändningen tystnar. Panik och acceptans för det oundvikliga.
+del 4: De sista systemens dödskamp innan batteriet dör och sändningen tystnar. Panik och acceptans av det oundvikliga.
 
 
